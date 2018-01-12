@@ -1,7 +1,5 @@
 <template>
   <!--该组件是通过外部传入数据计算总价以及数量的-->
-  <!--该组件是通过外部传入数据计算总价以及数量的-->
-  <!--该组件是通过外部传入数据计算总价以及数量的-->
   <div class="shopchar">
     <div class="content" @click="toggleShow">
       <div class="content-left">

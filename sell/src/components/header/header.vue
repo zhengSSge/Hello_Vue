@@ -70,7 +70,6 @@
   import star from '../start/start';
 
   export default {
-    name: 'header',
     props: {
       seller: {
         type: Object

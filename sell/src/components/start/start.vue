@@ -1,4 +1,5 @@
 <template>
+  <!-- 该组件是用来显示用户评星的 -->
   <div class="star" :class="startType">
     <span v-for="itemClass in itemClasses" :class="itemClass" class="star-item"></span>
   </div>

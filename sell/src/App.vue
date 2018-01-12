@@ -18,6 +18,7 @@
 <script>
   import axios from 'axios';
   import Header from './components/header/header';
+//  import deta from '../data.json';
 
   const ERR_OK = 0;
   export default {
@@ -27,7 +28,9 @@
       };
     },
     created() {
-      // 参数传递
+//      本地请求不可置于git 该为直接获取 打包使用
+//      this.sellers = deta.seller;
+//      参数传递 本地请求不可置于git 该为直接获取
       let params = {
         'a': 0
       };
@@ -41,7 +44,6 @@
 //      vue-resource 写法
 //      this.$http.get('/api/seller').then(response => {
 //        response = response.body;
-//        console.log(response);
 //        if (response.errno === ERR_OK) {
 //          this.sellers = response.data;
 //        }

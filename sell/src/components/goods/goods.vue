@@ -43,6 +43,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+//  import deta from '../../../data.json';
   import BScroll from 'better-scroll';
   import Clearing from '../shopchar/shopchar';
   import quantity from '../cartcontrol/cartcontrol';
@@ -91,6 +92,8 @@
     created() {
       // 插入dom操作,加载完页直接执行
       this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
+//      本地请求不可置于git 该为直接获取 打包使用
+//      this.goods = deta.goods;
       this.$http.get('/api/goods').then(response => {
         response = response.body;
         if (response.errno === ERR_OK) {

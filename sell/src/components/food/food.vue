@@ -14,7 +14,7 @@
             <span class="sell-count">月售{{food.sellCount}}</span><span class="rating">好评率{{food.rating}}%</span>
           </div>
         </div>
-        <div class="price">
+        <div class="price" style="padding:0 0 18px 18px">
           <span class="price-x">
             ￥<span class="price-xx">{{food.price}}</span>
           </span>
@@ -117,7 +117,6 @@
         .sell-count
           margin-right 12px
     .price
-      padding 0 0 18px 18px
       line-height 24px
       .price-x
         font-weight normal

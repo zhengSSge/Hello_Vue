@@ -15,7 +15,7 @@
         <li v-for="item in goods" class="foods-list foods-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="food in item.foods" class="food-item border-1px">
+            <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
               <div class="icon">
                 <img width="57" height="57" :src="food.icon">
               </div>
@@ -38,15 +38,18 @@
         </li>
       </ul>
     </div>
-    <Clearing ref="shopcart" :select-foods='selectFoods' :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice"></Clearing>
+    <Clearing ref="shopcart" :select-foods='selectFoods' :minPrice="seller.minPrice"
+              :deliveryPrice="seller.deliveryPrice"></Clearing>
+    <Food :food="selectedFood" ref="food"></Food>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-//  import deta from '../../../data.json';
+  //  import deta from '../../../data.json';
   import BScroll from 'better-scroll';
   import Clearing from '../shopchar/shopchar';
   import quantity from '../cartcontrol/cartcontrol';
+  import Food from '../food/food';
 
   const ERR_OK = 0;
   export default {
@@ -61,7 +64,8 @@
         goods: [],
         listHeight: [],
         scrollY: 0,
-        target: ''
+        target: '',
+        selectedFood: {}
       };
     },
     // 计算数据，根据数据改变而改变
@@ -116,6 +120,13 @@
         let el = foodList[index];
         this.goodsWrapper.scrollToElement(el, 300);
       },
+      selectFood(food, event) {
+        if (!event._constructed) {
+          return;
+        }
+        this.selectedFood = food;
+        this.$refs.food.show();
+      },
       addFood(target) {
         // 接收cartcontrol递参数 父组件接收子组件状态
         this._drop(target);
@@ -153,7 +164,8 @@
     components: {
       // 注册组件
       Clearing,
-      quantity
+      quantity,
+      Food
     }
   };
 </script>

@@ -2,12 +2,12 @@
   <!--该组件是 添加商品减少商品的-->
   <div class="cartControl">
     <transition name="move">
-      <div class="cart-left" v-show="this.food.count>0" @click="deleteCart" transition="move">
+      <div class="cart-left" v-show="this.food.count>0" @click.stop.prevent="deleteCart" transition="move">
         <span class="inners icon-shopping_cart"></span>
       </div>
     </transition>
     <div class="cart-content" v-show="this.food.count>0">{{food.count}}</div>
-    <div class="cart-right icon-thumb_down" @click="addCart"></div>
+    <div class="cart-right icon-thumb_down" @click.stop.prevent="addCart"></div>
   </div>
 </template>
 

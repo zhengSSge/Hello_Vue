@@ -32,6 +32,7 @@
           <p class="text">{{food.info}}</p>
         </div>
         <split></split>
+        <ratingselect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
       </div>
     </div>
   </transition>
@@ -41,11 +42,28 @@
   import BScroll from 'better-scroll';
   import Vue from 'vue';
   import cartcontrol from '../cartcontrol/cartcontrol';
+  import ratingselect from '../ratingselect/ratingselect';
   import split from '../split/split';
+
+  //  const POSITIVE = 0;
+  //  const NEGATIVE = 1;
+  const ALL = 2;
 
   export default {
     props: {
-      food: Object
+      food: Object,
+      selectType: ALL,
+      onlyContent: true,
+      desc: {
+        type: Object,
+        default() {
+          return {
+            all: '全部',
+            positive: '推荐',
+            negative: '吐槽'
+          };
+        }
+      }
     },
     data() {
       return {
@@ -79,6 +97,7 @@
     },
     components: {
       cartcontrol,
+      ratingselect,
       split
     }
   };

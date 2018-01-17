@@ -55,7 +55,7 @@
     name: 'shopchar',
     props: {
       selectFoods: {
-        // Array和Object, default是函数
+        // Array和Object, 都要返回函数、default
         type: Array,
         default() {
           return [];

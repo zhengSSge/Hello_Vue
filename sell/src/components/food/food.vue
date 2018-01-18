@@ -14,17 +14,15 @@
             <span class="sell-count">月售{{food.sellCount}}</span><span class="rating">好评率{{food.rating}}%</span>
           </div>
           <div class="price">
-          <span class="price-x">
-            ￥<span class="price-xx">{{food.price}}</span>
-          </span>
+            <span class="price-x">
+              ￥<span class="price-xx">{{food.price}}</span>
+            </span>
             <span class="price-y" v-show="food.oldPrice"><span class="price-yy">￥</span>{{food.oldPrice}}</span>
           </div>
           <div class="cartcontrol-wrapper">
             <cartcontrol :food="food"></cartcontrol>
           </div>
-          <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">
-            加入购物车
-          </div>
+          <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">加入购物车</div>
         </div>
         <split v-show="food.info"></split>
         <div class="info" v-show="food.info">
@@ -32,7 +30,26 @@
           <p class="text">{{food.info}}</p>
         </div>
         <split></split>
-        <ratingselect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
+        <div class="rating">
+          <h1 class="title">商品详情</h1>
+          <ratingselect @selectType="select" @toggleContent="toggle" :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
+          <div class="rating-wrapper">
+            <ul v-show="food.ratings && food.ratings.length">
+              <li v-show="aaa(rating.rateType,rating.text)" v-for="rating in food.ratings"
+                  class="rating-item border-1px">
+                <div class="user">
+                  <span class="name">{{rating.username}}</span>
+                  <img class="avatar" width="12" height="12" :src="rating.avatar">
+                </div>
+                <div class="time">{{rating.rateTime}}</div>
+                <p class="text">
+                  <span :class="{'icon-arrow_lift':rating.rateType===0,'icon-check_circle':rating.rateType===1}"></span>{{rating.text}}
+                </p>
+              </li>
+            </ul>
+            <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
+          </div>
+        </div>
       </div>
     </div>
   </transition>
@@ -45,32 +62,25 @@
   import ratingselect from '../ratingselect/ratingselect';
   import split from '../split/split';
 
-  //  const POSITIVE = 0;
-  //  const NEGATIVE = 1;
   const ALL = 2;
 
   export default {
     props: {
-      food: Object,
-      selectType: ALL,
-      onlyContent: true,
-      desc: {
-        type: Object,
-        default() {
-          return {
-            all: '全部',
-            positive: '推荐',
-            negative: '吐槽'
-          };
-        }
-      }
+      food: Object
     },
     data() {
       return {
-        showFlag: false
+        showFlag: false,
+        // all/2  全部 positive/0 推荐 negative/1 吐槽
+        selectType: ALL,
+        // 是否选择 有文本 无文本 评论
+        onlyContent: false,
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
+        }
       };
-    },
-    created() {
     },
     methods: {
       show() {
@@ -93,6 +103,30 @@
           return;
         }
         Vue.set(this.food, 'count', 1);
+      },
+      select(type) {
+        this.selectType = type;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+      toggle() {
+        this.onlyContent = !this.onlyContent;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+      aaa(type, text) {
+        // 显示文字评论  此条数据无文字评论
+        if (this.onlyContent && !text) {
+          return false;
+        }
+        // 状态为全部
+        if (this.selectType === ALL) {
+          return true;
+        } else {
+          return type === this.selectType;
+        }
       }
     },
     components: {
@@ -203,4 +237,48 @@
         padding: 0 8px
         font-size: 12px
         color: rgb(77, 85, 93)
+    .rating
+      padding-top: 18px
+      .title
+        line-height: 14px
+        margin-left: 18px
+        font-size: 14px
+        color: rgb(7, 17, 27)
+      .rating-wrapper
+        padding: 0 18px
+        .rating-item
+          position: relative
+          padding: 16px 0
+          border-1px(rgba(7, 17, 27, 0.1))
+          .user
+            position: absolute
+            right: 0
+            top: 16px
+            line-height: 12px
+            font-size: 0
+            .name
+              display: inline-block
+              margin-right: 6px
+              vertical-align: top
+              font-size: 10px
+              color: rgb(147, 153, 159)
+            .avatar
+              border-radius: 50%
+          .time
+            margin-bottom: 6px
+            line-height: 12px
+            font-size: 10px
+            color: rgb(147, 153, 159)
+          .text
+            line-height: 16px
+            font-size: 12px
+            color: rgb(7, 17, 27)
+            .icon-check_circle, .icon-arrow_lift
+              margin-right: 4px
+              line-height: 16px
+              font-size: 12px
+            .icon-arrow_lift
+              color: rgb(0, 160, 220)
+            .icon-thumb_down
+              color: rgb(147, 153, 159)
 </style>

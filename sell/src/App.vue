@@ -12,19 +12,27 @@
         <router-link to="/seller" tag="a">商家</router-link>
       </div>
     </div>
-    <router-view :seller="sellers"></router-view>
+    <keep-alive>
+      <router-view :seller="sellers"></router-view>
+    </keep-alive>
   </div>
 </template>
 <script>
-  import axios from 'axios';
+    import axios from 'axios';
   import Header from './components/header/header';
-//  import deta from '../data.json';
+  import {urlParse} from './common/js/util';
+  //  import deta from '../data.json';
 
   const ERR_OK = 0;
   export default {
     data() {
       return {
-        sellers: {}
+        sellers: {
+          id: (() => {
+            let queryParam = urlParse();
+            return queryParam.id;
+          })()
+        }
       };
     },
     created() {
@@ -32,20 +40,22 @@
 //      this.sellers = deta.seller;
 //      参数传递 本地请求不可置于git 该为直接获取
       let params = {
-        'a': 0
+        'id': this.sellers.id
       };
 //     2.0版本后 axios写法;
       axios.get('/api/seller', {params}).then((response) => {
-        let aa = response.data;
-        if (aa.errno === ERR_OK) {
-          this.sellers = aa.data;
+        let responses = response.data;
+        if (responses.errno === ERR_OK) {
+//          this.sellers = aa.data;
+          this.sellers = Object.assign({}, this.sellers, responses.data);
         }
       });
 //      vue-resource 写法
-//      this.$http.get('/api/seller').then(response => {
+//      this.$http.get('/api/seller?id=' + this.sellers.id).then(response => {
 //        response = response.body;
 //        if (response.errno === ERR_OK) {
 //          this.sellers = response.data;
+//          this.sellers = Object.assign({}, this.sellers, response.data);
 //        }
 //      }, response => {
 //      });

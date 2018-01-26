@@ -1,15 +1,18 @@
 <template>
+  <!--商品列表组件-->
+  <!--左侧-->
   <div class="goods">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
         <li v-for="(item,index) in goods" class="menu-item" :class="{ 'current': currentIndex === index }"
-            @click="selectMenu(index,$event)">
+            @click="selectMenu(index,$event)" ref="menuList">
         <span class="text border-1px">
           <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
         </span>
         </li>
       </ul>
     </div>
+    <!--右侧-->
     <div class="goods-wrapper" ref="goodsWrapper">
       <ul>
         <li v-for="item in goods" class="foods-list foods-list-hook">
@@ -61,26 +64,30 @@
     },
     data() {
       return {
+//        请求到的goods数据
         goods: [],
+//        右侧每个li(商品)距离顶部高度,数组
         listHeight: [],
+//        鼠标点击的位置
         scrollY: 0,
         target: '',
         selectedFood: {}
       };
     },
-    // 计算数据，根据数据改变而改变
     computed: {
+      // 计算数据，根据数据改变而改变
       currentIndex() {
         for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[i];
           let height2 = this.listHeight[i + 1];
           if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            this._followScroll(i);
             return i;
           }
         }
         return 0;
       },
-      // 数据转存
+      // 数据转移至Clearing组件
       selectFoods() {
         let foods = [];
         this.goods.forEach((good) => {
@@ -139,18 +146,22 @@
       },
       _initScrolls() {
         // 接收ref=''；
+        // 左侧热销榜滑动
         this.menuWrapper = new BScroll(this.$refs.menuWrapper, {
           click: true
         });
+        // 右侧热销商品滑动
         this.goodsWrapper = new BScroll(this.$refs.goodsWrapper, {
           click: true,
           probeType: 3 // 鼠标滚动实时刷新
         });
+        // 结合BScroll的接口使用,监听scroll事件(实时派发的),并获取鼠标坐标，当滚动时能实时暴露出scroll
         this.goodsWrapper.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y));
         });
       },
       _calculateHeight() {
+//        获取到右侧每个li(商品)距离顶部高度 push进listHeight中
         let foodList = this.$refs.goodsWrapper.getElementsByClassName('foods-list-hook');
         let height = 0;
         this.listHeight.push(height);
@@ -159,6 +170,11 @@
           height += time.clientHeight;
           this.listHeight.push(height);
         }
+      },
+      _followScroll(index) {
+        let menuList = this.$refs.menuList;
+        let el = menuList[index];
+        this.menuWrapper.scrollToElement(el, 300, 0, -100);
       }
     },
     components: {

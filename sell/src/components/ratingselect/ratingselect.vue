@@ -1,4 +1,5 @@
 <template>
+  <!--配件筛选组件-->
   <div class="ratingselect">
     <div class="rating-type border-1px">
       <span @click="select(2,$event)" class="block positive" :class="{'active':selectType===2}">{{desc.all}}<span
@@ -65,6 +66,7 @@
         if (!event._constructed) {
           return;
         }
+        // 抛出事件
         this.$emit('selectType', type);
       },
       toggleContent(event) {
@@ -116,13 +118,13 @@
       &.on
         .icon-keyboard_arrow_right
           color: #00c850
-      .icon-keyboard_arrow_right
-        display: inline-block
-        vertical-align: top
-        margin-right: 4px
-        font-size: 24px
-      .text
-        display: inline-block
-        vertical-align: top
-        font-size: 12px
+        .icon-keyboard_arrow_right
+          display: inline-block
+          vertical-align: top
+          margin-right: 4px
+          font-size: 24px
+        .text
+          display: inline-block
+          vertical-align: top
+          font-size: 12px
 </style>

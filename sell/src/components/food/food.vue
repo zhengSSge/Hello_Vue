@@ -1,4 +1,5 @@
 <template>
+  <!--商品详情组件-->
   <transition name="move">
     <div v-show="showFlag" class="food" ref="food">
       <div class="food-content">

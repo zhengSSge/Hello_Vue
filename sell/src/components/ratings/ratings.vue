@@ -1,4 +1,5 @@
 <template>
+  <!--商品评论组件-->
   <div class="ratings" ref="ratings">
     <div class="ratings-content">
       <div class="overview">
@@ -97,9 +98,11 @@
     },
     methods: {
       needShow(type, text) {
+        // 显示文字评论  此条数据无文字评论
         if (this.onlyContent && !text) {
           return false;
         }
+        // 状态为全部
         if (this.selectType === ALL) {
           return true;
         } else {

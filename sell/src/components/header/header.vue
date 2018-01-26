@@ -1,4 +1,5 @@
 <template>
+  <!--顶部header组件-->
   <div class="header">
     <div class="content-wrapper">
       <div class="avatar">

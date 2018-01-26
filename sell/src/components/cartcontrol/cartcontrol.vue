@@ -1,12 +1,14 @@
 <template>
   <!--该组件是 添加商品减少商品的-->
   <div class="cartControl">
+    <!--动画标签-->
     <transition name="move">
       <div class="cart-left" v-show="this.food.count>0" @click.stop.prevent="deleteCart" transition="move">
         <span class="inners icon-shopping_cart"></span>
       </div>
     </transition>
     <div class="cart-content" v-show="this.food.count>0">{{food.count}}</div>
+    <!--                                       事件修饰符-->
     <div class="cart-right icon-thumb_down" @click.stop.prevent="addCart"></div>
   </div>
 </template>
@@ -16,26 +18,32 @@
 
   export default {
     props: {
+//      接收数据
       food: {
         type: Object
       }
     },
     methods: {
       addCart(event) {
+//        去掉自带的click事件点击，即pc端直接返回
         if (!event._constructed) {
           return;
         }
+//         如果当前商品无数量 第一次点击，使用Vue.set给this.food添加1个count字段
         if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {
+//          第二次商品数量+1
           this.food.count++;
         }
+//        像父组件暴露事件
         this.$emit('add', event.target);
       },
       deleteCart(event) {
         if (!event._constructed) {
           return;
         }
+//        点击商品数量-1
         if (this.food.count) {
           this.food.count--;
         }

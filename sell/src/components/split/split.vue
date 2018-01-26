@@ -1,4 +1,5 @@
 <template>
+  <!--一个样式组件 多次复用-->
   <div class="split">
   </div>
 </template>

@@ -12,9 +12,11 @@
   const CLS_OFF = 'off';
   export default {
     props: {
+      // 接收图标字号
       size: {
         type: Number
       },
+      // 接收分数
       score: {
         type: Number
       }

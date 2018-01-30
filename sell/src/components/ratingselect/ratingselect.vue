@@ -118,13 +118,13 @@
       &.on
         .icon-keyboard_arrow_right
           color: #00c850
-        .icon-keyboard_arrow_right
-          display: inline-block
-          vertical-align: top
-          margin-right: 4px
-          font-size: 24px
-        .text
-          display: inline-block
-          vertical-align: top
-          font-size: 12px
+      .icon-keyboard_arrow_right
+        display: inline-block
+        vertical-align: top
+        margin-right: 4px
+        font-size: 24px
+      .text
+        display: inline-block
+        vertical-align: top
+        font-size: 12px
 </style>

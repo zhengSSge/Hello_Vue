@@ -5,7 +5,7 @@
 4 verbose stack Error: ENOENT: no such file or directory, open '/Users/zhengzhen/zhenGit/Hello_Vue/package.json'
 4 verbose stack     at Error (native)
 5 verbose cwd /Users/zhengzhen/zhenGit/Hello_Vue
-6 error Darwin 17.3.0
+6 error Darwin 17.4.0
 7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dev"
 8 error node v6.10.2
 9 error npm  v3.10.10

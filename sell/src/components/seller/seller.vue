@@ -139,7 +139,7 @@
             if (!this.picsScroll) {
               this.picsScroll = new BScroll(this.$refs.picWrapper, {
                 scrollX: true,  // 开起左右滑动
-                eventPassthrough: 'vertical' // 上下滑动 左右滑动 同时
+                eventPassthrough: 'vertical' // 上下滑动&左右滑动
               });
             } else {
               this.picsScroll.refresh();  // 初始化
